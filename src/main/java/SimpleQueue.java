@@ -2,10 +2,14 @@ import java.util.Stack;
 
 public class SimpleQueue<E> {
     /*
-    Complete the SimpleQueue class so that it can preform the push, pop, peek, and empty operations using two Stacks.
-    Two private Stack references stackA, and stackB are already defined, as well as a constructor that initializes them.
+    This solution does the extra work of re-ordering the stacks during the pop() and peak() operations with enqueue().
+    Any time we need to consider the item at the front of the queue, we call enqueue() which checks if stackB is empty,
+    and if it is everything gets moved from A to B while reversing the order. If it wasn't empty we can safely peek
+    or pop the items that had been enqueued previously.
 
-    Complete the push(), pop(), peek(), and empty() methods.
+    This is a bit faster than solution-1 as the time consuming operation of moving between stacks and re-ordering
+    the items is performed less often, only when necessary. In the worst case scenario this preforms about the same
+    as solution-1.
      */
 
     private Stack<E> stackA;
@@ -16,12 +20,20 @@ public class SimpleQueue<E> {
         stackB = new Stack<E>();
     }
 
+    private void enqueue() {
+        if(stackB.isEmpty()) {
+            while(!stackA.isEmpty()) {
+                stackB.push(stackA.pop());
+            }
+        }
+    }
+
     /**
      * Add a new item to the end of the queue
      * @param x - the item to be added
      */
     public void push(E x) {
-
+        stackA.push(x);
     }
 
     /**
@@ -29,7 +41,8 @@ public class SimpleQueue<E> {
      * @return the item at the front of the queue
      */
     public E pop() {
-
+        enqueue();
+        return stackB.pop();
     }
 
     /**
@@ -37,7 +50,8 @@ public class SimpleQueue<E> {
      * @return the item at the front of the queue
      */
     public E peek() {
-
+        enqueue();
+        return stackB.peek();
     }
 
     /**
@@ -45,6 +59,9 @@ public class SimpleQueue<E> {
      * @return true if the queue is empty, false otherwise
      */
     public boolean empty() {
-
+        if(stackA.isEmpty() && stackB.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }
