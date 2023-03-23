@@ -20,7 +20,7 @@ public class SimpleQueue<E> {
      * Add a new item to the end of the queue
      * @param x - the item to be added
      */
-    public void push(int x) {
+    public void push(E x) {
 
     }
 
@@ -28,7 +28,7 @@ public class SimpleQueue<E> {
      * Remove and return the first item in the queue
      * @return the item at the front of the queue
      */
-    public int pop() {
+    public E pop() {
 
     }
 
@@ -36,7 +36,7 @@ public class SimpleQueue<E> {
      * Return the first item in the queue without removing it
      * @return the item at the front of the queue
      */
-    public int peek() {
+    public E peek() {
 
     }
 
